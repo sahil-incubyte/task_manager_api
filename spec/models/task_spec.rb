@@ -20,4 +20,15 @@ RSpec.describe Task, type: :model do
 
     expect(task).to be_valid
   end
+
+  it "is invalid without title" do
+    task = Task.new
+    expect(task).not_to be_valid
+  end
+  
+  it "is invalid without user" do
+    task = Task.new(title: "Test")
+    expect(task).not_to be_valid
+  end
+  
 end
