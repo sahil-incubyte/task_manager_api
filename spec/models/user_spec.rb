@@ -1,3 +1,4 @@
+# spec/models/user_spec.rb
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -9,4 +10,31 @@ RSpec.describe User, type: :model do
     )
     expect(user).to be_valid
   end
+
+  it "is invalid without name" do
+    user = User.new(email: "test@test.com", password_digest: "password")
+    expect(user).not_to be_valid
+  end
+  
+  it "is invalid without email" do
+    user = User.new(name: "Sahil", password_digest: "password")
+    expect(user).not_to be_valid
+  end
+  
+  it "enforces unique email" do
+    User.create!(
+      name: "User1",
+      email: "test@test.com",
+      password_digest: "password"
+    )
+  
+    user = User.new(
+      name: "User2",
+      email: "test@test.com",
+      password_digest: "password"
+    )
+  
+    expect(user).not_to be_valid
+  end
+  
 end
