@@ -28,6 +28,15 @@ development:
   password: 123456
   host: localhost
 
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: task_manager_api_test
+  pool: 5
+  username: postgres
+  password: 123456
+  host: localhost  
+
 production:
   primary: &primary_production
     <<: *default
