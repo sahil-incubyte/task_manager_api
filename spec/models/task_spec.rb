@@ -30,5 +30,14 @@ RSpec.describe Task, type: :model do
     task = Task.new(title: "Test")
     expect(task).not_to be_valid
   end
-  
+
+  it "has many tasks" do
+    assoc = User.reflect_on_association(:tasks)
+    expect(assoc.macro).to eq :has_many
+  end
+
+  it "belongs to user" do
+    assoc = Task.reflect_on_association(:user)
+    expect(assoc.macro).to eq :belongs_to
+  end
 end
