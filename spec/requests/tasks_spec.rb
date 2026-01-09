@@ -21,4 +21,26 @@ RSpec.describe "Tasks API", type: :request do
       expect(json["id"]).to eq(task.id)
     end
   end
+
+  describe "POST /tasks" do
+    let(:user) { create(:user) }
+
+    it "creates a task" do
+      params = {
+        task: {
+          title: "New Task",
+          status: "pending",
+          priority: 1,
+          due_date: Date.today,
+          user_id: user.id
+        }
+      }
+
+      expect {
+        post "/tasks", params: params
+      }.to change(Task, :count).by(1)
+
+      expect(response).to have_http_status(:created)
+    end
+  end
 end
