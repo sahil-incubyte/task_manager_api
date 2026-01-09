@@ -2,6 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
+  it { should validate_presence_of(:title) }
+
+  it { should belong_to(:user) }
+
   it "is valid with valid attributes" do
     user = User.create!(
       name: "Sahil",
@@ -25,7 +29,7 @@ RSpec.describe Task, type: :model do
     task = Task.new
     expect(task).not_to be_valid
   end
-  
+
   it "is invalid without user" do
     task = Task.new(title: "Test")
     expect(task).not_to be_valid
