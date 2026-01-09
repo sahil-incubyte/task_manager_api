@@ -43,4 +43,17 @@ RSpec.describe "Tasks API", type: :request do
       expect(response).to have_http_status(:created)
     end
   end
+
+  describe "PATCH /tasks/:id" do
+    let(:task) { create(:task, title: "Old Title") }
+
+    it "updates the task" do
+      patch "/tasks/#{task.id}", params: {
+        task: { title: "Updated Title" }
+      }
+
+      expect(response).to have_http_status(:ok)
+      expect(task.reload.title).to eq("Updated Title")
+    end
+  end
 end
