@@ -56,4 +56,16 @@ RSpec.describe "Tasks API", type: :request do
       expect(task.reload.title).to eq("Updated Title")
     end
   end
+
+  describe "DELETE /tasks/:id" do
+    let!(:task) { create(:task) }
+
+    it "deletes the task" do
+      expect {
+        delete "/tasks/#{task.id}"
+      }.to change(Task, :count).by(-1)
+
+      expect(response).to have_http_status(:no_content)
+    end
+  end
 end
