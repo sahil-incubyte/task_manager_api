@@ -8,4 +8,22 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
     render json: task
   end
+
+  def create
+    task = Task.new(task_params)
+
+    if task.save
+      render json: task, status: :created
+    else
+      render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def task_params
+    params.require(:task).permit(
+      :title, :description, :status, :priority, :due_date, :user_id
+    )
+  end
 end
