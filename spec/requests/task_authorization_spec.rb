@@ -22,6 +22,8 @@ RSpec.describe "Task Authorization", type: :request do
   let!(:task_a) do
     Task.create!(
       title: "User A Task",
+      status: "pending",
+      priority: "medium",
       user: user_a
     )
   end
