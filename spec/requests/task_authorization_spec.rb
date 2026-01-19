@@ -19,6 +19,15 @@ RSpec.describe "Task Authorization", type: :request do
     )
   end
 
+  let(:token) { JsonWebToken.encode(user_id: user_b.id) }
+
+  let(:headers) do
+    {
+      "Authorization" => "Bearer #{token}",
+      "Content-Type" => "application/json"
+    }
+  end
+
   let!(:task_a) do
     Task.create!(
       title: "User A Task",
@@ -34,6 +43,14 @@ RSpec.describe "Task Authorization", type: :request do
     get "/tasks/#{task_a.id}", headers: {
       "Authorization" => "Bearer #{token_b}"
     }
+
+    expect(response).to have_http_status(:not_found)
+  end
+
+  it "prevents updating another user's task" do
+    patch "/tasks/#{task_a.id}",
+          params: { task: { title: "Hacked title" } }.to_json,
+          headers: headers
 
     expect(response).to have_http_status(:not_found)
   end
