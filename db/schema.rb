@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_122525) do
     t.datetime "created_at", null: false
     t.text "description"
     t.date "due_date"
-    t.integer "priority"
+    t.string "priority"
     t.string "status"
     t.string "title"
     t.datetime "updated_at", null: false
