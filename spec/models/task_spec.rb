@@ -16,8 +16,8 @@ RSpec.describe Task, type: :model do
     task = Task.new(
       title: "Learn Rails",
       description: "Active Record",
-      status: "pending",
-      priority: 1,
+      status: "todo",
+      priority: "medium",
       due_date: Date.today,
       user: user
     )

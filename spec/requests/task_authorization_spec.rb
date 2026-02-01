@@ -31,7 +31,7 @@ RSpec.describe "Task Authorization", type: :request do
   let!(:task_a) do
     Task.create!(
       title: "User A Task",
-      status: "pending",
+      status: "todo",
       priority: "medium",
       user: user_a
     )
@@ -44,7 +44,7 @@ RSpec.describe "Task Authorization", type: :request do
       "Authorization" => "Bearer #{token_b}"
     }
 
-    expect(response).to have_http_status(:not_found)
+    expect(response).to have_http_status(:forbidden)
   end
 
   it "prevents updating another user's task" do
@@ -52,6 +52,6 @@ RSpec.describe "Task Authorization", type: :request do
           params: { task: { title: "Hacked title" } }.to_json,
           headers: headers
 
-    expect(response).to have_http_status(:not_found)
+    expect(response).to have_http_status(:forbidden)
   end
 end
