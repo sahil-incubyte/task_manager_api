@@ -6,10 +6,15 @@ class AuthenticationController < ApplicationController
 
     if user.save
       token = JsonWebToken.encode(user_id: user.id)
-      render json: { token: token }, status: :created
+      render json: {
+        token: token,
+        user: UserSerializer.new(user).as_json
+      }, status: :created
     else
-      render json: { errors: user.errors.full_messages },
-             status: :unprocessable_entity
+      render json: {
+        error: "Validation failed",
+        details: user.errors.full_messages
+      }, status: :unprocessable_entity
     end
   end
 
@@ -18,10 +23,15 @@ class AuthenticationController < ApplicationController
 
     if user&.authenticate(params[:password])
       token = JsonWebToken.encode(user_id: user.id)
-      render json: { token: token }
+      render json: {
+        token: token,
+        user: UserSerializer.new(user).as_json
+      }, status: :ok
     else
-      render json: { error: "Invalid email or password" },
-             status: :unauthorized
+      render json: {
+        error: "Authentication failed",
+        message: "Invalid email or password"
+      }, status: :unauthorized
     end
   end
 
