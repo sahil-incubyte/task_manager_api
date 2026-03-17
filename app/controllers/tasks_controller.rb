@@ -1,6 +1,25 @@
 class TasksController < ApplicationController
   def index
-    render json: current_user.tasks
+    tasks = current_user.tasks
+
+    # Filtering
+    tasks = tasks.by_status(params[:status])
+    tasks = tasks.by_priority(params[:priority])
+
+    # Search
+    tasks = tasks.search_by_title(params[:search])
+
+    # Date range filtering
+    tasks = tasks.due_before(params[:due_before])
+    tasks = tasks.due_after(params[:due_after])
+
+    # Sorting
+    tasks = tasks.sorted_by(params[:sort_by], params[:order])
+
+    # Pagination
+    tasks = tasks.page(params[:page]).per(params[:per_page])
+
+    render json: tasks, meta: pagination_meta(tasks), adapter: :json
   end
 
   def show
@@ -9,7 +28,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    task = Task.new(task_params)
+    task = current_user.tasks.new(task_params)
 
     if task.save
       render json: task, status: :created
@@ -19,7 +38,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    task = Task.find(params[:id])
+    task = current_user.tasks.find(params[:id])
 
     if task.update(task_params)
       render json: task
@@ -29,7 +48,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    task = Task.find(params[:id])
+    task = current_user.tasks.find(params[:id])
     task.destroy
     head :no_content
   end
@@ -37,8 +56,15 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(
-      :title, :description, :status, :priority, :due_date, :user_id
-    )
+    params.require(:task).permit(:title, :description, :status, :priority, :due_date)
+  end
+
+  def pagination_meta(collection)
+    {
+      current_page: collection.current_page,
+      total_pages: collection.total_pages,
+      total_count: collection.total_count,
+      per_page: collection.limit_value
+    }
   end
 end
