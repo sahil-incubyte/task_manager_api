@@ -88,3 +88,12 @@ jobs:
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
+
+      - name: Verify Swagger docs are up-to-date
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          PATTERN: spec/requests/**/*_spec.rb, spec/api/**/*_spec.rb, spec/integration/**/*_spec.rb, spec/swagger/**/*_spec.rb
+        run: |
+          bundle exec rails rswag:specs:swaggerize
+          git diff --exit-code swagger/

@@ -31,6 +31,12 @@ Rails.application.configure do
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
 
+  # Use the test adapter for background jobs (in-memory, no Redis needed).
+  config.active_job.queue_adapter = :test
+
+  # Route mailer jobs to the mailers queue.
+  config.action_mailer.deliver_later_queue_name = "mailers"
+
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
