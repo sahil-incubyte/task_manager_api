@@ -16,14 +16,14 @@ RSpec.describe 'Tasks', type: :request do
     get 'List tasks with pagination, filtering, searching, and sorting' do
       tags 'Tasks'
       produces 'application/json'
-      security [Bearer: []]
+      security [ Bearer: [] ]
 
       parameter name: :page, in: :query, type: :integer, required: false, description: 'Page number'
       parameter name: :per_page, in: :query, type: :integer, required: false, description: 'Items per page'
       parameter name: :status, in: :query, type: :string, required: false,
                 enum: %w[todo in_progress completed pending], description: 'Filter by status'
       parameter name: :priority, in: :query, type: :integer, required: false,
-                enum: [1, 2, 3], description: 'Filter by priority'
+                enum: [ 1, 2, 3 ], description: 'Filter by priority'
       parameter name: :search, in: :query, type: :string, required: false, description: 'Search tasks by title'
       parameter name: :sort_by, in: :query, type: :string, required: false,
                 enum: %w[created_at due_date priority], description: 'Sort field'
@@ -62,7 +62,7 @@ RSpec.describe 'Tasks', type: :request do
       tags 'Tasks'
       consumes 'application/json'
       produces 'application/json'
-      security [Bearer: []]
+      security [ Bearer: [] ]
 
       parameter name: :body, in: :body, schema: {
         type: :object,
@@ -79,7 +79,7 @@ RSpec.describe 'Tasks', type: :request do
             required: %w[title status]
           }
         },
-        required: ['task']
+        required: [ 'task' ]
       }
 
       response '201', 'task created' do
@@ -123,7 +123,7 @@ RSpec.describe 'Tasks', type: :request do
     get 'Get a specific task' do
       tags 'Tasks'
       produces 'application/json'
-      security [Bearer: []]
+      security [ Bearer: [] ]
 
       parameter name: :id, in: :path, type: :integer, required: true, description: 'Task ID'
 
@@ -162,7 +162,7 @@ RSpec.describe 'Tasks', type: :request do
       tags 'Tasks'
       consumes 'application/json'
       produces 'application/json'
-      security [Bearer: []]
+      security [ Bearer: [] ]
 
       parameter name: :id, in: :path, type: :integer, required: true, description: 'Task ID'
       parameter name: :body, in: :body, schema: {
@@ -179,7 +179,7 @@ RSpec.describe 'Tasks', type: :request do
             }
           }
         },
-        required: ['task']
+        required: [ 'task' ]
       }
 
       response '200', 'task updated' do
@@ -230,7 +230,7 @@ RSpec.describe 'Tasks', type: :request do
 
     delete 'Delete a task' do
       tags 'Tasks'
-      security [Bearer: []]
+      security [ Bearer: [] ]
 
       parameter name: :id, in: :path, type: :integer, required: true, description: 'Task ID'
 

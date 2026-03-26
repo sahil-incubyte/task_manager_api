@@ -92,19 +92,19 @@ RSpec.describe Task, type: :model do
 
     describe ".sorted_by" do
       it "sorts by priority ascending" do
-        expect(Task.sorted_by("priority", "asc").pluck(:priority)).to eq([1, 2, 3])
+        expect(Task.sorted_by("priority", "asc").pluck(:priority)).to eq([ 1, 2, 3 ])
       end
 
       it "sorts by priority descending" do
-        expect(Task.sorted_by("priority", "desc").pluck(:priority)).to eq([3, 2, 1])
+        expect(Task.sorted_by("priority", "desc").pluck(:priority)).to eq([ 3, 2, 1 ])
       end
 
       it "defaults to created_at for invalid field" do
-        expect(Task.sorted_by("hacked", "asc").pluck(:id)).to eq([todo_task.id, completed_task.id, in_progress_task.id])
+        expect(Task.sorted_by("hacked", "asc").pluck(:id)).to eq([ todo_task.id, completed_task.id, in_progress_task.id ])
       end
 
       it "defaults to asc for invalid direction" do
-        expect(Task.sorted_by("priority", "invalid").pluck(:priority)).to eq([1, 2, 3])
+        expect(Task.sorted_by("priority", "invalid").pluck(:priority)).to eq([ 1, 2, 3 ])
       end
     end
   end

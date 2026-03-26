@@ -11,17 +11,17 @@ RSpec.describe "Sidekiq Infrastructure", type: :config do
 
     it "defines critical queue with highest priority" do
       critical_entry = config[:queues].find { |q| q.first == "critical" }
-      expect(critical_entry).to eq(["critical", 3])
+      expect(critical_entry).to eq([ "critical", 3 ])
     end
 
     it "defines mailers queue with medium priority" do
       mailers_entry = config[:queues].find { |q| q.first == "mailers" }
-      expect(mailers_entry).to eq(["mailers", 2])
+      expect(mailers_entry).to eq([ "mailers", 2 ])
     end
 
     it "defines default queue with lowest priority" do
       default_entry = config[:queues].find { |q| q.first == "default" }
-      expect(default_entry).to eq(["default", 1])
+      expect(default_entry).to eq([ "default", 1 ])
     end
 
     it "defines exactly three queues" do

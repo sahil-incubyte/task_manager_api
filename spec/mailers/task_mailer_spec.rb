@@ -8,11 +8,11 @@ RSpec.describe TaskMailer, type: :mailer do
     let(:mail) { described_class.task_created(task) }
 
     it "sends to the task owner email" do
-      expect(mail.to).to eq([user.email])
+      expect(mail.to).to eq([ user.email ])
     end
 
     it "sends from the default application sender" do
-      expect(mail.from).to eq(["from@example.com"])
+      expect(mail.from).to eq([ "from@example.com" ])
     end
 
     it "sets subject with the task title" do
@@ -61,11 +61,11 @@ RSpec.describe TaskMailer, type: :mailer do
     let(:mail) { described_class.task_completed(task) }
 
     it "sends to the task owner email" do
-      expect(mail.to).to eq([user.email])
+      expect(mail.to).to eq([ user.email ])
     end
 
     it "sends from the default application sender" do
-      expect(mail.from).to eq(["from@example.com"])
+      expect(mail.from).to eq([ "from@example.com" ])
     end
 
     it "sets subject with the task title" do
