@@ -1,0 +1,10 @@
+{
+  "ignored_warnings": [
+    {
+      "fingerprint": "40be17ee84017c91503dab23873e24bdd71665ab665bf6f351cfc09ff83e6582",
+      "note": "Ruby 3.2 EOL acknowledged - upgrade planned"
+    }
+  ],
+  "updated": "2026-03-26",
+  "brakeman_version": "7.1.2"
+}

@@ -1,6 +1,29 @@
 {
   "RSpec": {
     "coverage": {
+      "/home/sahil/task_manager_api/lib/middleware/security_headers.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          65,
+          null,
+          65,
+          65,
+          65,
+          65,
+          65,
+          65,
+          65,
+          null,
+          65,
+          null,
+          null
+        ]
+      },
       "/home/sahil/task_manager_api/app/jobs/task_cleanup_job.rb": {
         "lines": [
           1,
@@ -310,8 +333,54 @@
           1,
           null
         ]
+      },
+      "/home/sahil/task_manager_api/app/controllers/health_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
       }
     },
-    "timestamp": 1773904252
+    "timestamp": 1774272533
   }
 }

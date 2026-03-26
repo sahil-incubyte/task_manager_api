@@ -28,7 +28,7 @@ RSpec.describe 'Authentication', type: :request do
           }
         end
 
-        schema type: :object, properties: { token: { type: :string } }, required: ['token']
+        schema type: :object, properties: { token: { type: :string } }, required: [ 'token' ]
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -76,7 +76,7 @@ RSpec.describe 'Authentication', type: :request do
 
         let(:body) { { email: 'login@test.com', password: 'password123' } }
 
-        schema type: :object, properties: { token: { type: :string } }, required: ['token']
+        schema type: :object, properties: { token: { type: :string } }, required: [ 'token' ]
 
         run_test! do |response|
           data = JSON.parse(response.body)

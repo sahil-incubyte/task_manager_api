@@ -16,7 +16,7 @@ module TaskManagerApi
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks])
+    config.autoload_lib(ignore: %w[assets tasks middleware])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -30,5 +30,12 @@ module TaskManagerApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Security headers middleware
+    require_relative "../lib/middleware/security_headers"
+    config.middleware.use SecurityHeaders
+
+    # Rate limiting middleware
+    config.middleware.use Rack::Attack
   end
 end
