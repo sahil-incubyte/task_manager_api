@@ -38,6 +38,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
     database: task_manager_api_production
     username: task_manager_api
     password: <%= ENV["TASK_MANAGER_API_DATABASE_PASSWORD"] %>

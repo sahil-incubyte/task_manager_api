@@ -36,12 +36,14 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'jwt', '~> 2.8'
 gem 'kaminari'
 gem 'active_model_serializers', '~> 0.10'
+gem 'redis', '>= 4.0.1'
 gem 'sidekiq'
 gem 'sidekiq-cron'
 gem 'rswag-api'
 gem 'rswag-ui'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-# gem "rack-cors"
+gem "rack-cors"
+gem "rack-attack"
 
 group :development do
   gem 'letter_opener'
