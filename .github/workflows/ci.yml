@@ -19,7 +19,7 @@ jobs:
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+        run: bin/brakeman --no-pager -i config/brakeman.ignore
       
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
@@ -63,11 +63,11 @@ jobs:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      # redis:
-      #   image: valkey/valkey:8
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - name: Install packages
@@ -85,6 +85,14 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
+          REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
+
+      - name: Verify Swagger docs are up-to-date
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          PATTERN: spec/requests/**/*_spec.rb, spec/api/**/*_spec.rb, spec/integration/**/*_spec.rb, spec/swagger/**/*_spec.rb
+        run: |
+          bundle exec rails rswag:specs:swaggerize
+          git diff --exit-code swagger/

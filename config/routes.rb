@@ -1,6 +1,16 @@
+require "sidekiq/web"
+
+Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+  ActiveSupport::SecurityUtils.secure_compare(username, ENV.fetch("SIDEKIQ_USERNAME", "admin")) &
+  ActiveSupport::SecurityUtils.secure_compare(password, ENV.fetch("SIDEKIQ_PASSWORD", "password"))
+end
+
 Rails.application.routes.draw do
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
+  get "health" => "health#show"
+
+  mount Sidekiq::Web => "/sidekiq"
 
   # Authentication (non-RESTful, public endpoints)
   post 'signup', to: 'authentication#signup'

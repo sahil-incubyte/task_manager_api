@@ -29,6 +29,9 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  # Use letter_opener to preview emails in the browser.
+  config.action_mailer.delivery_method = :letter_opener
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
@@ -49,6 +52,12 @@ Rails.application.configure do
 
   # Append comments with runtime information tags to SQL queries in logs.
   config.active_record.query_log_tags_enabled = true
+
+  # Use Sidekiq for background jobs in development.
+  config.active_job.queue_adapter = :sidekiq
+
+  # Route mailer jobs to the mailers queue.
+  config.action_mailer.deliver_later_queue_name = "mailers"
 
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true

@@ -31,6 +31,7 @@ class TasksController < ApplicationController
     task = current_user.tasks.new(task_params)
 
     if task.save
+      TaskNotificationJob.perform_later(task.id, "created")
       render json: task, status: :created
     else
       render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
@@ -39,8 +40,12 @@ class TasksController < ApplicationController
 
   def update
     task = current_user.tasks.find(params[:id])
+    status_was = task.status
 
     if task.update(task_params)
+      if task.status == "completed" && status_was != "completed"
+        TaskNotificationJob.perform_later(task.id, "completed")
+      end
       render json: task
     else
       render json: { errors: task.errors.full_messages }, status: :unprocessable_entity

@@ -263,7 +263,7 @@ RSpec.describe "Tasks API", type: :request do
 
       json = JSON.parse(response.body)
       ids = json["tasks"].map { |t| t["id"] }
-      expect(ids).to eq([task_a.id, task_b.id, task_c.id])
+      expect(ids).to eq([ task_a.id, task_b.id, task_c.id ])
     end
 
     it "sorts by priority descending" do
@@ -271,7 +271,7 @@ RSpec.describe "Tasks API", type: :request do
 
       json = JSON.parse(response.body)
       priorities = json["tasks"].map { |t| t["priority"] }
-      expect(priorities).to eq([3, 2, 1])
+      expect(priorities).to eq([ 3, 2, 1 ])
     end
 
     it "sorts by due_date ascending" do
@@ -288,7 +288,7 @@ RSpec.describe "Tasks API", type: :request do
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       ids = json["tasks"].map { |t| t["id"] }
-      expect(ids).to eq([task_a.id, task_b.id, task_c.id])
+      expect(ids).to eq([ task_a.id, task_b.id, task_c.id ])
     end
 
     it "ignores invalid sort direction and defaults to asc" do
@@ -296,7 +296,7 @@ RSpec.describe "Tasks API", type: :request do
 
       json = JSON.parse(response.body)
       priorities = json["tasks"].map { |t| t["priority"] }
-      expect(priorities).to eq([1, 2, 3])
+      expect(priorities).to eq([ 1, 2, 3 ])
     end
   end
 
